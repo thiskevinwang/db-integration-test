@@ -6,9 +6,9 @@ import type { PoolConfig } from "pg";
 const config: PoolConfig = {
   database: "postgres",
   user: "postgres",
-  password: process.env.DB_PASS,
+  password: process.env.POSTGRES_PASSWORD,
   port: 5432,
-  host: process.env.DB_HOST,
+  host: process.env.POSTGRES_HOST,
   idleTimeoutMillis: 120_000,
   // lambda timeout is 30
   connectionTimeoutMillis: 16_000,

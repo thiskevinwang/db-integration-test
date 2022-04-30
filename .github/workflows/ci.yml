@@ -8,7 +8,26 @@ on:
 jobs:
   test:
     name: Test
+    # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
+    # Docker Hub image that `container-job` executes in
+    container: node:18-alpine
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -16,3 +35,6 @@ jobs:
           node-version: "16"
       - run: npm ci
       - run: npm run test -- --detectOpenHandles
+        env:
+          POSTGRES_HOST: postgres
+          POSTGRES_PASSWORD: postgres
