@@ -1,16 +1,15 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
+import { pool } from "../db/pool";
 import { runMigrations } from "../db/run-migrations";
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
-  // log(req, res, () => {});
-
   try {
     await runMigrations("db/migrations");
-    return res.status(200).send("OK");
+    const { rows } = await pool.query("SELECT * FROM pg_extension");
+    return res.status(200).json(rows);
   } catch (err: any) {
-    throw err;
-    return res.status(400).send(err.message);
+    return res.status(500).send(err.message);
   }
 };
 
