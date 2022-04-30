@@ -8,7 +8,8 @@ import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
 const dynamodbClient = new DynamoDBClient({
   region: "localhost",
-  endpoint: "http://localhost:8000",
+  // Does this have to map to a "service" name?
+  endpoint: "http://dynamo:8000",
   credentials: {
     accessKeyId: "accessKeyId",
     secretAccessKey: "secretAccessKey",
