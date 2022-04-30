@@ -1,0 +1,36 @@
+import {
+  DynamoDBClient,
+  CreateTableCommand,
+  KeySchemaElement,
+  AttributeDefinition,
+} from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+
+const dynamodbClient = new DynamoDBClient({
+  region: "localhost",
+  endpoint: "http://localhost:8000",
+});
+
+const docClient = DynamoDBDocumentClient.from(dynamodbClient);
+
+export class DbClient {
+  private dynamodbClient = dynamodbClient;
+  private docClient = docClient;
+
+  constructor() {}
+
+  async createTable(
+    tableName: string,
+    keySchema: KeySchemaElement[],
+    attributeDefinitions: AttributeDefinition[]
+  ) {
+    const cmd = new CreateTableCommand({
+      TableName: tableName,
+      KeySchema: keySchema,
+      AttributeDefinitions: attributeDefinitions,
+      BillingMode: "PAY_PER_REQUEST",
+    });
+    const result = await this.dynamodbClient.send(cmd);
+    return result;
+  }
+}
