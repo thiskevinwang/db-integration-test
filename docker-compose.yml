@@ -1,0 +1,29 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  test:
+    build: .
+    command: ["npm", "run", "test"]
+    depends_on:
+      - dynamo
+      - postgres
+    links:
+      - dynamo
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_PORT: 5432
+      DYNAMO_HOST: dynamo
+      DYNAMO_PORT: 8000
+  dynamo:
+    image: amazon/dynamodb-local
+    # ports:
+    #   - "8000:8000"
+  postgres:
+    image: postgres
+    # ports:
+    #   - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "password"
+volumes:
+  logvolume01: {}
