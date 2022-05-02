@@ -1,9 +1,16 @@
-# vercel-functions-db-integration-test
+# db-integration-test
 
-This repository demonstrates running `jest` **integration** tests (integrating with DynamoDB and Postgres) via:
+This repository demonstrates running `jest` **integration** tests against DynamoDB and Postgres. There are two flavors.
 
-1. `docker compose` [^compose]
-2. GitHub actions/workflows
+**`docker compose`** [^compose]
+
+- This is intended for local testing
+
+**GitHub workflows**
+
+- This is intended for testing in a CI workflow.
+- This route leverages [service containers](https://docs.github.com/en/actions/using-containerized-services/about-service-containers)
+  > You can use service containers to connect databases, web services, memory caches, and other tools to your workflow.
 
 [^compose]:
     > The new Compose V2, which supports the `compose` command as part of the Docker CLI, is now available.
@@ -17,17 +24,25 @@ This repository demonstrates running `jest` **integration** tests (integrating w
 
 ## Getting started
 
+### Local Testing
+
 Run `make test`
+
+### CI Testing
+
+Push to the default branch to trigger a GitHub workflow run
+
+- See [ci.yml](./.github/workflows/ci.yml) for details
 
 ## Misc Notes:
 
 Some various commands to test locally.
 
 ```bash
-# start postgres
+# start postgres alone
 docker run --name some-postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword --rm -d postgres
 
-# start dynamo
+# start dynamo alone
 docker run --name some-dynamo -p 8000:8000 --rm -d amazon/dynamodb-local
 
 # build and start test container

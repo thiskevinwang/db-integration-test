@@ -1,5 +1,5 @@
 {
-  "name": "vercel-functions-db-integration-test",
+  "name": "db-integration-test",
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
