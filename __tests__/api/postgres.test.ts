@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
-import handler from "../../api/health";
+import handler from "../../api/postgres";
 
 const json = jest.fn();
 const status = jest.fn(() => {

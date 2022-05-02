@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-import { DbClient } from "../db/dynamo";
+import { DbClient } from "../db/dynamo/dynamo-client";
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   try {

@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import {
   DynamoDBClient,
   CreateTableCommand,
@@ -9,7 +11,7 @@ import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 const dynamodbClient = new DynamoDBClient({
   region: "localhost",
   // Does this have to map to a "service" name?
-  endpoint: "http://dynamo:8000",
+  endpoint: `http://${process.env.DYNAMO_HOST}:${process.env.DYNAMO_PORT}`,
   credentials: {
     accessKeyId: "accessKeyId",
     secretAccessKey: "secretAccessKey",
