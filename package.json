@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/dotenv": "^8.2.0",
     "@types/jest": "^27.4.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.9.0",
