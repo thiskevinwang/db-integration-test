@@ -28,6 +28,7 @@ jobs:
       integrations-api:
         image: public.ecr.aws/d4t3o3o7/integrations-api:latest
         env:
+          PORT: 5000
           POSTGRES_HOST: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
