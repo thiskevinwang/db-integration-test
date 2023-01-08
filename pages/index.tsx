@@ -21,7 +21,7 @@ export async function getStaticProps() {
     "Fetching data from integration API...",
     process.env.INTEGRATIONS_API_URL
   );
-  const res = await fetch(process.env.INTEGRATIONS_API_URL!);
+  const res = await fetch(`${process.env.INTEGRATIONS_API_URL}/organizations`);
   const integrationApiResponse = await res.json();
 
   // await runMigrations("../db/postgres/migrations");

@@ -24,6 +24,7 @@ jobs:
         DYNAMO_HOST: localhost
         DYNAMO_PORT: 8000
         INTEGRATIONS_API_URL: http://integrations-api:5000
+    # NOTE: the order of service containers MATTERS
     services:
       # Label used to access the service container
       postgres:
@@ -53,8 +54,18 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5000:5000
+      # content-sync:
+      #   image: public.ecr.aws/d4t3o3o7/integrations:latest
     steps:
       - uses: actions/checkout@v3
+      # Run content-sync
+      - uses: addnab/docker-run-action@v3
+        with:
+          registry: public.ecr.aws/d4t3o3o7
+          image: integrations:latest
+          # options: -v ${{ github.workspace }}:/work -e ABC=123
+          run: |
+            /bin/bash -c node ./content-sync.js
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
