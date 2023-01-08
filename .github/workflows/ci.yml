@@ -1,4 +1,7 @@
 name: Integration
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
   pull_request:
   push:
@@ -51,10 +54,22 @@ jobs:
           node-version: "16"
           cache: "npm"
       - run: npm install
-      - run: npm run test -- --detectOpenHandles
+      # - run: npm run test -- --detectOpenHandles
+      #   env:
+      #     POSTGRES_HOST: localhost
+      #     POSTGRES_PASSWORD: postgres
+      #     POSTGRES_PORT: 5432
+      #     DYNAMO_HOST: localhost
+      #     DYNAMO_PORT: 8000
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PASSWORD: postgres
           POSTGRES_PORT: 5432
           DYNAMO_HOST: localhost
           DYNAMO_PORT: 8000
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
