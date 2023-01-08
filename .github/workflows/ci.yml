@@ -23,7 +23,14 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: node:18-alpine
+    container:
+      image: node:18-alpine
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_PORT: 5432
+        DYNAMO_HOST: localhost
+        DYNAMO_PORT: 8000
 
     # Service containers to run with `container-job`
     services:
@@ -67,11 +74,5 @@ jobs:
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_PORT: 5432
-          DYNAMO_HOST: localhost
-          DYNAMO_PORT: 8000
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
