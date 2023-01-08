@@ -9,15 +9,15 @@ on:
       - main
 
 jobs:
-  echo:
-    name: Echo
-    runs-on: ubuntu-latest
-    if: ${{ env.ACT }}
-    steps:
-      - run: |
-          echo "============"
-          echo "RUNNING VIA ACT"
-          echo "============"
+  # echo:
+  #   name: Echo
+  #   runs-on: ubuntu-latest
+  #   if: ${{ env.ACT }}
+  #   steps:
+  #     - run: |
+  #         echo "============"
+  #         echo "RUNNING VIA ACT"
+  #         echo "============"
   test:
     name: Test
     # Containers must run in Linux based operating systems
