@@ -5,7 +5,8 @@
   "scripts": {
     "test": "jest",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "build": "next build"
   },
   "author": "",
   "license": "ISC",
