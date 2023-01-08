@@ -1,6 +1,6 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
-import handler from "../../api/dynamo";
+import handler from "../../_api/dynamo";
 
 const json = jest.fn();
 const status = jest.fn(() => {
