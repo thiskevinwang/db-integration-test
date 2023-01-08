@@ -22,7 +22,7 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     return res.status(200).json(output.TableDescription);
   } catch (err: any) {
     console.error(err);
-    return res.status(500).send(err.message);
+    return res.status(500).json(err);
   }
 };
 

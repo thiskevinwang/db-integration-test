@@ -1,4 +1,4 @@
-name: CI
+name: Integration
 on:
   pull_request:
   push:
@@ -6,6 +6,15 @@ on:
       - main
 
 jobs:
+  echo:
+    name: Echo
+    runs-on: ubuntu-latest
+    if: ${{ env.ACT }}
+    steps:
+      - run: |
+          echo "============"
+          echo "RUNNING VIA ACT"
+          echo "============"
   test:
     name: Test
     # Containers must run in Linux based operating systems
@@ -44,8 +53,8 @@ jobs:
       - run: npm install
       - run: npm run test -- --detectOpenHandles
         env:
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PASSWORD: postgres
           POSTGRES_PORT: 5432
-          DYNAMO_HOST: dynamo
+          DYNAMO_HOST: localhost
           DYNAMO_PORT: 8000

@@ -9,7 +9,7 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
     const { rows } = await pool.query("SELECT * FROM pg_extension");
     return res.status(200).json(rows);
   } catch (err: any) {
-    return res.status(500).send(err.message);
+    return res.status(500).json(err);
   }
 };
 
