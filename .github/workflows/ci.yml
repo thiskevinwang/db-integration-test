@@ -59,13 +59,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       # Run content-sync
-      - uses: addnab/docker-run-action@v3
-        with:
-          registry: public.ecr.aws/d4t3o3o7
-          image: integrations:latest
-          # options: -v ${{ github.workspace }}:/work -e ABC=123
-          run: |
-            /bin/bash -c node ./content-sync.js
+      - run: |
+          docker run --rm public.ecr.aws/d4t3o3o7/integrations:latest "./content-sync.js"
+        env:
+          INPUT_INTEGRATIONS_REPO_PATH: ${{ github.workspace }}
+          INPUT_INTEGRATIONS_API_BASE_URL: http://integrations-api:5000
+          INPUT_INTEGRATIONS_API_ADMIN_TOKEN: ""
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
