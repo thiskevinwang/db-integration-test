@@ -52,6 +52,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_PORT: 5432
           POSTGRES_DB: postgres
+          ADMIN_TOKEN: fake
         ports:
           - 5000:5000
       # content-sync:
@@ -64,7 +65,7 @@ jobs:
           apt-get install -y curl
       # Create a fake organization
       - run: |
-          curl -d '{"slug":"my-org"}' -H "Content-Type: application/json" -X POST http://integrations-api:5000/organizations
+          curl -d '{"slug":"my-org"}' -H "Content-Type: application/json" -H "Authorization: Bearer fake"  -X POST http://integrations-api:5000/organizations
       # Run content-sync
       # - run: |
       #     docker run -e INPUT_INTEGRATIONS_REPO_PATH="." -e INPUT_INTEGRATIONS_API_BASE_URL=http://integrations-api:5000 -e INPUT_INTEGRATIONS_API_ADMIN_TOKEN='' --rm public.ecr.aws/d4t3o3o7/integrations:latest "./content-sync.js"
