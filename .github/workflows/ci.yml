@@ -58,13 +58,16 @@ jobs:
       #   image: public.ecr.aws/d4t3o3o7/integrations:latest
     steps:
       - uses: actions/checkout@v3
-      # Run content-sync
+      # Create a fake organization
       - run: |
-          docker run -e INPUT_INTEGRATIONS_REPO_PATH="." -e INPUT_INTEGRATIONS_API_BASE_URL=http://integrations-api:5000 -e INPUT_INTEGRATIONS_API_ADMIN_TOKEN='' --rm public.ecr.aws/d4t3o3o7/integrations:latest "./content-sync.js"
-        # env:
-        #   INPUT_INTEGRATIONS_REPO_PATH: ${{ github.workspace }}
-        #   INPUT_INTEGRATIONS_API_BASE_URL: http://integrations-api:5000
-        #   INPUT_INTEGRATIONS_API_ADMIN_TOKEN: ""
+          curl -d '{"slug":"my-org"}' -H "Content-Type: application/json" -X POST http://integrations-api:5000/organizations
+      # Run content-sync
+      # - run: |
+      #     docker run -e INPUT_INTEGRATIONS_REPO_PATH="." -e INPUT_INTEGRATIONS_API_BASE_URL=http://integrations-api:5000 -e INPUT_INTEGRATIONS_API_ADMIN_TOKEN='' --rm public.ecr.aws/d4t3o3o7/integrations:latest "./content-sync.js"
+      # env:
+      #   INPUT_INTEGRATIONS_REPO_PATH: ${{ github.workspace }}
+      #   INPUT_INTEGRATIONS_API_BASE_URL: http://integrations-api:5000
+      #   INPUT_INTEGRATIONS_API_ADMIN_TOKEN: ""
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
@@ -77,8 +80,8 @@ jobs:
       #     POSTGRES_PORT: 5432
       #     DYNAMO_HOST: localhost
       #     DYNAMO_PORT: 8000
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+      # - name: Install Vercel CLI
+      #   run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build Project Artifacts
