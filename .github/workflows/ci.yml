@@ -12,18 +12,18 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    container:
-      image: node:18-alpine
-      env:
-        # Warning: instead of `localhost`, use the service
-        # container's name, like `postgres`. This is the same
-        # behavior as with `docker compose`.
-        POSTGRES_HOST: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_PORT: 5432
-        DYNAMO_HOST: localhost
-        DYNAMO_PORT: 8000
-        INTEGRATIONS_API_URL: http://integrations-api:5000
+    # container:
+    #   image: node:18-alpine
+    env:
+      # Warning: instead of `localhost`, use the service
+      # container's name, like `postgres`. This is the same
+      # behavior as with `docker compose`.
+      POSTGRES_HOST: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT: 5432
+      DYNAMO_HOST: localhost
+      DYNAMO_PORT: 8000
+      INTEGRATIONS_API_URL: http://integrations-api:5000
     # NOTE: the order of service containers MATTERS
     services:
       # Label used to access the service container
