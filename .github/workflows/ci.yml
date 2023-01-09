@@ -58,6 +58,10 @@ jobs:
       #   image: public.ecr.aws/d4t3o3o7/integrations:latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install cURL
+        run: |
+          apt-get update
+          apt-get install -y curl
       # Create a fake organization
       - run: |
           curl -d '{"slug":"my-org"}' -H "Content-Type: application/json" -X POST http://integrations-api:5000/organizations
